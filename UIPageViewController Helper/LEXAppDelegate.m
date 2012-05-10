@@ -8,7 +8,8 @@
 
 #import "LEXAppDelegate.h"
 
-#import "LEXViewController.h"
+#import "LEXMainViewController.h"
+#import "LEXLazyPageViewController.h"
 
 @implementation LEXAppDelegate
 
@@ -26,11 +27,8 @@
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        self.viewController = [[[LEXViewController alloc] initWithNibName:@"LEXViewController_iPhone" bundle:nil] autorelease];
-    } else {
-        self.viewController = [[[LEXViewController alloc] initWithNibName:@"LEXViewController_iPad" bundle:nil] autorelease];
-    }
+    self.viewController = [[[LEXMainViewController alloc] init] autorelease];
+    self.window.backgroundColor = [UIColor blackColor];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     return YES;

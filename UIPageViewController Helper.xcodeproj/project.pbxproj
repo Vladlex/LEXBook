@@ -7,32 +7,40 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0BB6F44B155B7F9500822B1B /* LEXLazyPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB6F44A155B7F9500822B1B /* LEXLazyPageViewController.m */; };
+		0BB6F453155BA41D00822B1B /* LEXReusablePageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BB6F452155B9CE400822B1B /* LEXReusablePageManager.m */; };
+		883EAD1D155B585D00BD07C0 /* LEXBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 883EAD1C155B585D00BD07C0 /* LEXBook.m */; };
 		8895A67B1559F8AF00BED47B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8895A67A1559F8AF00BED47B /* UIKit.framework */; };
 		8895A67D1559F8AF00BED47B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8895A67C1559F8AF00BED47B /* Foundation.framework */; };
 		8895A67F1559F8AF00BED47B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8895A67E1559F8AF00BED47B /* CoreGraphics.framework */; };
 		8895A6851559F8AF00BED47B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8895A6831559F8AF00BED47B /* InfoPlist.strings */; };
 		8895A6871559F8AF00BED47B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8895A6861559F8AF00BED47B /* main.m */; };
 		8895A68B1559F8AF00BED47B /* LEXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8895A68A1559F8AF00BED47B /* LEXAppDelegate.m */; };
-		8895A68E1559F8AF00BED47B /* LEXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8895A68D1559F8AF00BED47B /* LEXViewController.m */; };
-		8895A6911559F8AF00BED47B /* LEXViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8895A68F1559F8AF00BED47B /* LEXViewController_iPhone.xib */; };
-		8895A6941559F8AF00BED47B /* LEXViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8895A6921559F8AF00BED47B /* LEXViewController_iPad.xib */; };
+		8895A68E1559F8AF00BED47B /* LEXMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8895A68D1559F8AF00BED47B /* LEXMainViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0BB6F447155B77B300822B1B /* LEXReusablePageProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LEXReusablePageProtocol.h; sourceTree = "<group>"; };
+		0BB6F449155B7F9500822B1B /* LEXLazyPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LEXLazyPageViewController.h; sourceTree = "<group>"; };
+		0BB6F44A155B7F9500822B1B /* LEXLazyPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEXLazyPageViewController.m; sourceTree = "<group>"; };
+		0BB6F450155B813100822B1B /* UIColor+RandomColor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+RandomColor.h"; sourceTree = "<group>"; };
+		0BB6F451155B9CE400822B1B /* LEXReusablePageManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LEXReusablePageManager.h; sourceTree = "<group>"; };
+		0BB6F452155B9CE400822B1B /* LEXReusablePageManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LEXReusablePageManager.m; sourceTree = "<group>"; };
+		883EAD19155B562F00BD07C0 /* LEXBookDelegateAndDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LEXBookDelegateAndDataSource.h; sourceTree = "<group>"; };
+		883EAD1B155B585D00BD07C0 /* LEXBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LEXBook.h; sourceTree = "<group>"; };
+		883EAD1C155B585D00BD07C0 /* LEXBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEXBook.m; sourceTree = "<group>"; };
 		8895A6761559F8AF00BED47B /* UIPageViewController Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UIPageViewController Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8895A67A1559F8AF00BED47B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8895A67C1559F8AF00BED47B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8895A67E1559F8AF00BED47B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		8895A6821559F8AF00BED47B /* UIPageViewController Helper-Info.plist */ = {isa = PBXFileReference; path = "UIPageViewController Helper-Info.plist"; sourceTree = "<group>"; };
+		8895A6821559F8AF00BED47B /* UIPageViewController Helper-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UIPageViewController Helper-Info.plist"; sourceTree = "<group>"; };
 		8895A6841559F8AF00BED47B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8895A6861559F8AF00BED47B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		8895A6881559F8AF00BED47B /* UIPageViewController Helper-Prefix.pch */ = {isa = PBXFileReference; path = "UIPageViewController Helper-Prefix.pch"; sourceTree = "<group>"; };
-		8895A6891559F8AF00BED47B /* LEXAppDelegate.h */ = {isa = PBXFileReference; path = LEXAppDelegate.h; sourceTree = "<group>"; };
+		8895A6881559F8AF00BED47B /* UIPageViewController Helper-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIPageViewController Helper-Prefix.pch"; sourceTree = "<group>"; };
+		8895A6891559F8AF00BED47B /* LEXAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LEXAppDelegate.h; sourceTree = "<group>"; };
 		8895A68A1559F8AF00BED47B /* LEXAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LEXAppDelegate.m; sourceTree = "<group>"; };
-		8895A68C1559F8AF00BED47B /* LEXViewController.h */ = {isa = PBXFileReference; path = LEXViewController.h; sourceTree = "<group>"; };
-		8895A68D1559F8AF00BED47B /* LEXViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LEXViewController.m; sourceTree = "<group>"; };
-		8895A6901559F8AF00BED47B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LEXViewController_iPhone.xib; sourceTree = "<group>"; };
-		8895A6931559F8AF00BED47B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LEXViewController_iPad.xib; sourceTree = "<group>"; };
+		8895A68C1559F8AF00BED47B /* LEXMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LEXMainViewController.h; sourceTree = "<group>"; };
+		8895A68D1559F8AF00BED47B /* LEXMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LEXMainViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +57,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0BB6F448155B7C7800822B1B /* LEXBook */ = {
+			isa = PBXGroup;
+			children = (
+				0BB6F451155B9CE400822B1B /* LEXReusablePageManager.h */,
+				0BB6F452155B9CE400822B1B /* LEXReusablePageManager.m */,
+				883EAD1B155B585D00BD07C0 /* LEXBook.h */,
+				883EAD1C155B585D00BD07C0 /* LEXBook.m */,
+				883EAD19155B562F00BD07C0 /* LEXBookDelegateAndDataSource.h */,
+				0BB6F447155B77B300822B1B /* LEXReusablePageProtocol.h */,
+			);
+			name = LEXBook;
+			sourceTree = "<group>";
+		};
 		8895A66B1559F8AE00BED47B = {
 			isa = PBXGroup;
 			children = (
@@ -79,12 +100,14 @@
 		8895A6801559F8AF00BED47B /* UIPageViewController Helper */ = {
 			isa = PBXGroup;
 			children = (
+				0BB6F448155B7C7800822B1B /* LEXBook */,
 				8895A6891559F8AF00BED47B /* LEXAppDelegate.h */,
 				8895A68A1559F8AF00BED47B /* LEXAppDelegate.m */,
-				8895A68C1559F8AF00BED47B /* LEXViewController.h */,
-				8895A68D1559F8AF00BED47B /* LEXViewController.m */,
-				8895A68F1559F8AF00BED47B /* LEXViewController_iPhone.xib */,
-				8895A6921559F8AF00BED47B /* LEXViewController_iPad.xib */,
+				8895A68C1559F8AF00BED47B /* LEXMainViewController.h */,
+				8895A68D1559F8AF00BED47B /* LEXMainViewController.m */,
+				0BB6F449155B7F9500822B1B /* LEXLazyPageViewController.h */,
+				0BB6F44A155B7F9500822B1B /* LEXLazyPageViewController.m */,
+				0BB6F450155B813100822B1B /* UIColor+RandomColor.h */,
 				8895A6811559F8AF00BED47B /* Supporting Files */,
 			);
 			path = "UIPageViewController Helper";
@@ -153,8 +176,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8895A6851559F8AF00BED47B /* InfoPlist.strings in Resources */,
-				8895A6911559F8AF00BED47B /* LEXViewController_iPhone.xib in Resources */,
-				8895A6941559F8AF00BED47B /* LEXViewController_iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,7 +188,10 @@
 			files = (
 				8895A6871559F8AF00BED47B /* main.m in Sources */,
 				8895A68B1559F8AF00BED47B /* LEXAppDelegate.m in Sources */,
-				8895A68E1559F8AF00BED47B /* LEXViewController.m in Sources */,
+				8895A68E1559F8AF00BED47B /* LEXMainViewController.m in Sources */,
+				0BB6F453155BA41D00822B1B /* LEXReusablePageManager.m in Sources */,
+				883EAD1D155B585D00BD07C0 /* LEXBook.m in Sources */,
+				0BB6F44B155B7F9500822B1B /* LEXLazyPageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,22 +204,6 @@
 				8895A6841559F8AF00BED47B /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		8895A68F1559F8AF00BED47B /* LEXViewController_iPhone.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8895A6901559F8AF00BED47B /* en */,
-			);
-			name = LEXViewController_iPhone.xib;
-			sourceTree = "<group>";
-		};
-		8895A6921559F8AF00BED47B /* LEXViewController_iPad.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8895A6931559F8AF00BED47B /* en */,
-			);
-			name = LEXViewController_iPad.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -254,6 +262,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UIPageViewController Helper/UIPageViewController Helper-Prefix.pch";
 				INFOPLIST_FILE = "UIPageViewController Helper/UIPageViewController Helper-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -265,6 +274,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UIPageViewController Helper/UIPageViewController Helper-Prefix.pch";
 				INFOPLIST_FILE = "UIPageViewController Helper/UIPageViewController Helper-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -289,6 +299,7 @@
 				8895A6991559F8AF00BED47B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

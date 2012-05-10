@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class LEXViewController;
+@class LEXMainViewController;
 
 @interface LEXAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) LEXViewController *viewController;
+@property (strong, nonatomic) LEXMainViewController *viewController;
 
 @end
