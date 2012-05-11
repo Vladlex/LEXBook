@@ -28,6 +28,12 @@
 
 #pragma mark Life cycle
 
+- (void)dealloc {
+    [pageNumberLabel release];
+    [pageColor_ release];
+    [super dealloc];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

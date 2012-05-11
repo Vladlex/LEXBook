@@ -15,7 +15,11 @@
 @interface LEXMainViewController : UIViewController <LEXBookDataSource, LEXBookDelegate> {
 //    UIPageViewController *pageViewController;
     LEXBook *sampleBook;
+    
+    
+    NSInteger numberOfItems;
 }
 
+- (NSInteger)itemsPerPageForOrientation:(UIInterfaceOrientation)orientation;
 
 @end

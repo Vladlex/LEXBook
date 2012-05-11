@@ -58,12 +58,13 @@ typedef enum NSInteger {
 
 - (BOOL)pageWithNumberCanBeFeatured:(NSInteger)pageNumber orientation:(UIInterfaceOrientation)orientation;
 - (UIPageViewControllerSpineLocation)spineLocationForPageScheme:(LEXBookOrientationPageScheme)pageScheme;
+- (NSInteger)numberOfFeaturedPagesForOrientation:(UIInterfaceOrientation)orientation;
+
 
 // Page orientation settings methods
 - (void)setPageScheme:(LEXBookOrientationPageScheme)orientationScheme forOrientation:(UIInterfaceOrientation)orientation;
 - (LEXBookOrientationPageScheme)pageSchemeForOrientation:(UIInterfaceOrientation)orientation;
 - (void)setPageSchemeForLanscapeOrientation:(LEXBookOrientationPageScheme)orientationScheme;
 - (void)setPageSchemeForPortraitOrientation:(LEXBookOrientationPageScheme)orientationScheme;
-- (NSInteger)numberOfFeaturedPagesForOrientation:(UIInterfaceOrientation)orientation;
 
 @end

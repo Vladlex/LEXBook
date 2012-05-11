@@ -25,6 +25,9 @@
         sampleBook = [[LEXBook alloc] init];
         sampleBook.delegate = self;
         sampleBook.dataSource = self;
+        
+        numberOfItems = 10;
+        
     }
     return self;
 }
@@ -37,13 +40,6 @@
     
     
     // This is standart UIPageViewController initialization and configuring block
-    /*
-    LEXBookOrientationPageScheme pageScheme = [sampleBook pageSchemeForOrientation:self.interfaceOrientation];
-    UIPageViewControllerSpineLocation spinLocation = [sampleBook spineLocationForPageScheme:pageScheme];
-    
-    NSNumber *spinLocationNumber = [NSNumber numberWithInteger:spinLocation];
-    NSDictionary *pageViewControllerOptions = [NSDictionary dictionaryWithObject:spinLocationNumber forKey:UIPageViewControllerOptionSpineLocationKey];
-    */
     UIPageViewController *pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl
                                                                                navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
                                                                                              options:nil];
@@ -61,7 +57,10 @@
     [sampleBook setPageViewController:pageViewController];
     // Leaf book to first (zero-indexed) page
     [sampleBook leafToPageWithPageNumber:0 animated:YES];
-    // Ooomph, this is over. Now you can relax.    
+    // Ooomph, this is over. Now you can relax.   
+    
+    [pageViewController release];
+    
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -76,10 +75,27 @@
     return YES;
 }
 
+- (NSInteger)itemsPerPageForOrientation:(UIInterfaceOrientation)orientation {
+    if (UIInterfaceOrientationIsLandscape(orientation)) {
+        return 2;
+    }
+    return 4;
+}
+
+- (NSInteger)numberOfAllItems {
+    return numberOfItems;
+}
+
 #pragma mark Book data source
 
-- (NSInteger)numberOfPagesInBook:(LEXBook *)book {
-    return 4;
+- (NSInteger)numberOfPagesInBook:(LEXBook *)book 
+                  forOrientation:(UIInterfaceOrientation)orientation{
+    NSInteger itemsPerPage = [self itemsPerPageForOrientation:orientation];
+    NSInteger numberOfPages = numberOfItems / itemsPerPage;
+    if (numberOfItems % [self itemsPerPageForOrientation:orientation] != 0) {
+        numberOfPages ++;
+    }
+    return numberOfPages;
 }
 
 - (UIViewController <LEXReusablePageProtocol> *)pageInBook:(LEXBook *)book 
@@ -90,15 +106,36 @@
     return page;
 }
 
+- (NSInteger)book:(LEXBook *)book shouldLeafToPageWithNumberWhenRotateToOrientation:(UIInterfaceOrientation)orientation fromPageWithNumber:(NSInteger)pageNumber {
+    UIInterfaceOrientation actualOrientation = book.pageViewController.interfaceOrientation;
+    NSInteger firstShowingItemIndex = pageNumber * [self itemsPerPageForOrientation:actualOrientation];
+    NSInteger newPageNumber = firstShowingItemIndex / [self itemsPerPageForOrientation:orientation];
+    return newPageNumber;
+}
+
+- (BOOL)book:(LEXBook *)book shouldAutomaticallyFindNeededPageWhenRotateTo:(UIInterfaceOrientation)orientation fromPageWithNumber:(NSInteger)pageNumber {
+    UIInterfaceOrientation actualOrientation = book.pageViewController.interfaceOrientation;
+    BOOL actualOrientationIsLandcsape = UIInterfaceOrientationIsLandscape(actualOrientation);
+    BOOL futureOrientationIsLandscape = UIInterfaceOrientationIsLandscape(orientation);
+    if (actualOrientationIsLandcsape == futureOrientationIsLandscape) {
+        return YES;
+    }
+    return NO;
+}
+
 #pragma mark Book delegate
 
 - (void)book:(LEXBook *)book didLeafToPageWithNumber:(NSInteger)pageNumber
 {
-    NSLog(@"Leafed to %d, controllers: %@", pageNumber, book.pageViewController.viewControllers);
+
 }
 
 - (void)book:(LEXBook *)book cancelLeafToPageWithNumber:(NSInteger)canceledPageNumber returnToPageWithNumber:(NSInteger)actualPageNumber 
 {
+    
+}
+
+- (void)book:(LEXBook *)book willRotateToOrientation:(UIInterfaceOrientation)orientation {
     
 }
 
