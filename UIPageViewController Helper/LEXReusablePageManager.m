@@ -8,6 +8,7 @@
 
 #import "LEXReusablePageManager.h"
 
+#import "LEXLazyPageViewController.h"
 
 @interface LEXReusablePageManager ()
 
@@ -17,10 +18,9 @@
 
 - (void)dealloc {
     [queuedPagesSet release];
-    [pendingPagesSet release];
     [super dealloc];
 }
-
+ 
 - (id)init {
     self = [super init];
     if (self != nil) {
@@ -32,21 +32,27 @@
 
 #pragma mark Getter accessors
 
+- (id)dequeueReusablePage {
+    id page = [queuedPagesSet anyObject];
+    if (page) {
+        [page retain];
+        [queuedPagesSet removeObject:page];
+        return [page autorelease];
+    }
+    return nil;
+}
+
+- (void)addPagesToQueue:(NSArray *)pages {
+    [queuedPagesSet addObjectsFromArray:pages];
+}
+
+
 - (NSArray*)pendingPages {
     return pendingPagesSet.allObjects;
 }
 
 - (NSArray*)queuedPages {
     return queuedPagesSet.allObjects;
-}
-
-- (id)dequeueReusablePage {
-    id page = [queuedPagesSet anyObject];
-    if (page) {
-        [self movePageFromQueueToPending:page];
-    }
-    
-    return page;
 }
 
 - (BOOL)isPageInQueue:(UIViewController *)page {
@@ -61,18 +67,12 @@
     [queuedPagesSet addObject:page];
 }
 
-- (void)addPagesToQueue:(NSArray *)pages {
-    for (id page in pages) {
-        [self addPageToQueue:page];
-    }
-}
-
 - (void)addPageToPending:(UIViewController *)page {
     if ([pendingPagesSet containsObject:page]) {
         NSLog(@"Adding page to pending when already added: %@", page);
     }
     [pendingPagesSet addObject:page];
-
+    
 }
 
 - (void)addPagesToPending:(NSArray *)pages {
@@ -86,7 +86,7 @@
         [pendingPagesSet removeObject:page];
     }
     else {
-        NSLog(@"There is no page in pending: %@", page);
+        NSLog(@"There is no page in pending: %@. P: %@", page, pendingPagesSet);
     }
 }
 
@@ -120,12 +120,6 @@
 - (void)movePagesFromPendingToQueue:(NSArray *)pages {
     [self removePagesFromPending:pages];
     [self addPagesToQueue:pages];
-}
-
-- (void)pageNumbersLog {
-    NSString *queueNumbers = [[self.queuedPages valueForKey:@"pageNumber"] componentsJoinedByString:@", "];
-    NSString *pendingNumbers = [[self.pendingPages valueForKey:@"pageNumber"] componentsJoinedByString:@", "];
-    NSLog(@"Q: %@\nP: %@", queueNumbers, pendingNumbers);
 }
 
 @end

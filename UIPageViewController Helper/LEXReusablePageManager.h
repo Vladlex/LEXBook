@@ -11,11 +11,14 @@
 @interface LEXReusablePageManager : NSObject {
     NSMutableSet *queuedPagesSet;
     NSMutableSet *pendingPagesSet;
+
 }
 
 - (NSArray*)queuedPages;
 - (NSArray*)pendingPages;
 
+
+- (id)dequeueReusablePage;
 
 - (void)addPageToQueue:(UIViewController*)page;
 - (void)addPagesToQueue:(NSArray*)pages;
@@ -32,9 +35,8 @@
 - (void)movePageFromPendingToQueue:(UIViewController*)page;
 - (void)movePagesFromPendingToQueue:(NSArray *)pages;
 
-- (id)dequeueReusablePage;
-
 - (BOOL)isPageInPending:(UIViewController*)page;
 - (BOOL)isPageInQueue:(UIViewController*)page;
+
 
 @end

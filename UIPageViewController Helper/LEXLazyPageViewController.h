@@ -11,14 +11,18 @@
 #import "LEXReusablePageProtocol.h"
 
 @interface LEXLazyPageViewController : UIViewController <LEXReusablePageProtocol> {
-    NSInteger pageNumber_;
-    
     UIColor *pageColor_;
     
     UILabel *pageNumberLabel;
+    
+    
+    
 }
 @property (nonatomic, assign) NSInteger pageNumber;
 @property (nonatomic, retain) UIColor *pageColor;
+@property (nonatomic, retain) UILabel *centerLabel;
+
+@property (nonatomic, readonly) NSInteger uniqueNum;
 
 + (id)pageWithRandomColor;
 

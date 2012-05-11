@@ -13,6 +13,7 @@
 #import "LEXReusablePageManager.h"
 
 @interface LEXBook ()
+@property (nonatomic, assign) BOOL useReusablePages;
 
 // If asc = YES then need following page. Else need previous page.
 - (UIViewController*)nextPageForPage:(UIViewController*)actualPage asc:(BOOL)asc interfaceOrientation:(UIInterfaceOrientation)orientation;
@@ -41,6 +42,10 @@
 
 - (id)init
 {
+    return [self initWithUsingReusablePages:NO];
+}
+
+- (id)initWithUsingReusablePages:(BOOL)useReusablePages {
     self = [super init];
     if (self != nil) {
         // Default orientation
@@ -52,6 +57,7 @@
                               nil];
         pageManager = [[LEXReusablePageManager alloc] init];
         self.showBackOfLastPageIfPageIsDoubleSided = YES;
+        self.useReusablePages = useReusablePages;
     }
     return self;
 }
@@ -78,7 +84,8 @@
 #pragma mark -
 #pragma mark Public methods
 
-- (UIViewController <LEXReusablePageProtocol> *)dequeueReusablePage {
+- (UIViewController <LEXReusablePageProtocol> *)dequeueReusablePage 
+{
     if (self.useReusablePages == NO) {
         return nil;
     }
@@ -86,7 +93,8 @@
     return page;
 }
 
-- (NSInteger)currentPageNumber {
+- (NSInteger)currentPageNumber 
+{
     NSArray *pages = [self featuredPages];
     if (pages == nil || pages.count == 0) {
         return NSNotFound;
@@ -95,7 +103,8 @@
     return [page pageNumberForLEXBook];
 }
 
-- (NSArray*)featuredPages {
+- (NSArray*)featuredPages 
+{
     return [self.pageViewController viewControllers];
 }
 
@@ -173,10 +182,27 @@
         UIViewController <LEXReusablePageProtocol> *newPage = [self pageWithNumber:pageNumber+newPageIndex orientation:orientation];
         [newPages addObject:newPage];
     }
+    
+    NSArray *actualPages = self.pageViewController.viewControllers;
+    
+    if (self.useReusablePages == YES) {
+        if (animated == NO) {
+            [pageManager removePagesFromPending:newPages];
+            [pageManager addPagesToQueue:actualPages];
+        }
+    }
+    
     [self.pageViewController setViewControllers:[newPages autorelease] direction:animationDirection animated:animated completion:^(BOOL finished) {
         if ([self.delegate respondsToSelector:@selector(book:didLeafToPageWithNumber:)]) {
             [self.delegate book:self didLeafToPageWithNumber:pageNumber];
         }
+        if (self.useReusablePages == YES && animated == YES) {
+            // All previous controllers can be added to queue.
+            [pageManager addPagesToQueue:actualPages];
+            // All current controllers are not pending anymore.
+            [pageManager removePagesFromPending:newPages];
+        }
+        // All previous controllers can be added to queue.
     }];
 }
 
@@ -251,7 +277,6 @@
             handlyLeafing = YES;
         }
     }
-    
     if (handlyLeafing) {
         needReloading = YES;
         currentFeaturedPageNumber = [self.dataSource book:self shouldLeafToPageWithNumberWhenRotateToOrientation:orientation fromPageWithNumber:currentFeaturedPageNumber];
@@ -278,8 +303,6 @@
             needReloading = YES;
         }
     }
-    
-   
     if (needReloading) { 
         BOOL shouldAnimate = NO;
         if ([self.delegate respondsToSelector:@selector(book:shouldAnimatePagesReloadingWhenChangeOrientationFrom:to:)]) {
@@ -296,6 +319,40 @@
     LEXBookOrientationPageScheme futurePageScheme = [self pageSchemeForOrientation:orientation];
     UIPageViewControllerSpineLocation futureSpinLocation = [self spineLocationForPageScheme:futurePageScheme];
     return futureSpinLocation;
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController 
+        didFinishAnimating:(BOOL)finished 
+   previousViewControllers:(NSArray *)previousViewControllers 
+       transitionCompleted:(BOOL)completed {
+    
+    if (finished == YES && completed == YES) {
+        if (self.useReusablePages == YES) {
+            // Previous pages have been closed
+            NSArray *closedPages = previousViewControllers;
+            [pageManager addPagesToQueue:closedPages];
+            
+            // Pending pages becomes an actual.
+            NSArray *actualPages = pageViewController.viewControllers;
+            [pageManager removePagesFromPending:actualPages];
+
+            // There are some pages can exist, if user very fast thumbs through pages.
+            // We must move this pages from pending to queue or remove them
+            NSArray *quicklyTurnedPages = pageManager.pendingPages;
+            [pageManager movePagesFromPendingToQueue:quicklyTurnedPages];
+        }
+            }
+    if (finished == YES && completed == NO) {
+        if (self.useReusablePages == YES) {
+            // Actual pages are left actuals
+            NSArray *actualPages = previousViewControllers;
+            // Pending pages must be added to queue. We can find pending pages
+            NSMutableArray *pendingPages = [[pageManager pendingPages] mutableCopy];
+            [pendingPages removeObjectsInArray:actualPages];
+            [pageManager movePagesFromPendingToQueue:pendingPages];
+            [pendingPages release];
+        }
+    }
 }
 
 #pragma mark Private methods
@@ -317,9 +374,12 @@
 
 - (UIViewController <LEXReusablePageProtocol> *)pageWithNumber:(NSInteger)pageNumber orientation:(UIInterfaceOrientation)orientation
 {
-    UIViewController <LEXReusablePageProtocol> *page = [self.dataSource pageInBook:self forPageNumber:pageNumber forOrientation:orientation];
+    UIViewController <LEXReusablePageProtocol> *page = (UIViewController <LEXReusablePageProtocol> *)[self.dataSource pageInBook:self forPageNumber:pageNumber forOrientation:orientation];
     NSAssert1(page != nil, @"Must recieve configured non-nil page in %@", NSStringFromSelector(_cmd));
     [page setPageNumberForLEXBook:pageNumber];
+    if (self.useReusablePages) {
+        [pageManager addPageToPending:page];
+    }
     return page;
 }
 
@@ -341,7 +401,7 @@
     
     LEXBookOrientationPageScheme pageScheme = [self pageSchemeForOrientation:orientation];
     if ( (pageScheme == LEXBookOrientationPageSchemeOnePageLeftSided ||
-          pageScheme == LEXBookOrientationPageSchemeOnePageRightSided )&&
+          pageScheme == LEXBookOrientationPageSchemeOnePageRightSided ) &&
         pageNumber == numberOfPagesInBook) {
         return NO;
     }

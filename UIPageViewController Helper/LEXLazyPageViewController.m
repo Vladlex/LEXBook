@@ -17,18 +17,22 @@
 @implementation LEXLazyPageViewController
 @synthesize pageNumber = pageNumber_;
 @synthesize pageColor = pageColor_;
+@synthesize centerLabel = centerLabel_;
+@synthesize uniqueNum = uniqueNum_;
 
 #pragma mark Class methods
 
-+ (id)pageWithRandomColor {
-    id page = [[[self alloc] init] autorelease];
++ (LEXLazyPageViewController*)pageWithRandomColor 
+{
+    id page = [[self alloc] init];
     [page setPageColor:[UIColor randomColor]];
-    return page;
+    return [page autorelease];
 }
 
 #pragma mark Life cycle
 
-- (void)dealloc {
+- (void)dealloc 
+{
     [pageNumberLabel release];
     [pageColor_ release];
     [super dealloc];
@@ -40,6 +44,7 @@
     if (self) {
         // Custom initialization
         self.pageColor = [UIColor whiteColor];
+        uniqueNum_ = arc4random()%35000;
     }
     return self;
 }
@@ -50,8 +55,17 @@
     
     self.view.backgroundColor = self.pageColor;
     
-    pageNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(20.0, 20.0, 60.0, 27.0)];
+    pageNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 10.0, 60.0, 27.0)];
     [self.view addSubview:pageNumberLabel];
+    
+    centerLabel_ = [[UILabel alloc] initWithFrame:CGRectInset(self.view.bounds, 40.0, 40.0)];
+    self.centerLabel.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
+    self.centerLabel.textAlignment = UITextAlignmentCenter;
+    self.centerLabel.shadowColor = [UIColor whiteColor];
+    self.centerLabel.shadowOffset = CGSizeMake(0, 1);
+    self.centerLabel.numberOfLines = 0;
+    [self.view addSubview:self.centerLabel];
+    
 	// Do any additional setup after loading the view.
 }
 
@@ -85,16 +99,17 @@
  - (void)setPageNumberForLEXBook:(NSInteger)pageNumber
 {
     self.pageNumber = pageNumber;
-    pageNumberLabel.text = [NSString stringWithFormat:@"Page %d", self.pageNumber];
+    pageNumberLabel.text = [NSString stringWithFormat:@"Page %d", pageNumber_];
 }
 
 - (NSInteger)pageNumberForLEXBook
 {
-    return self.pageNumber;
+    return pageNumber_;
 }
 
-- (NSString*)description {
-    return [NSString stringWithFormat:@"Page with num %d", [self pageNumberForLEXBook]];
+- (NSString*)description
+{
+    return [NSString stringWithFormat:@"Page with num %d, un: %d (rc: %d)", self.pageNumber, self.uniqueNum, self.retainCount];
 }
 
 @end

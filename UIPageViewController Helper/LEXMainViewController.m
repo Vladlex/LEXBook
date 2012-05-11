@@ -22,10 +22,9 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self != nil) {
-        sampleBook = [[LEXBook alloc] init];
+        sampleBook = [[LEXBook alloc] initWithUsingReusablePages:YES];
         sampleBook.delegate = self;
         sampleBook.dataSource = self;
-        
         numberOfItems = 10;
         
     }
@@ -102,18 +101,32 @@
                                              forPageNumber:(NSInteger)pageNumber 
                                             forOrientation:(UIInterfaceOrientation)orientation
 {
-    UIViewController <LEXReusablePageProtocol> *page = [LEXLazyPageViewController pageWithRandomColor];
+    LEXLazyPageViewController *page = (LEXLazyPageViewController*)[book dequeueReusablePage];
+    BOOL isCreated = NO;
+    if (!page) {
+        isCreated = YES;
+        page = [LEXLazyPageViewController pageWithRandomColor];
+    }
+    // Configuring
+    NSString *configuringText = [NSString stringWithFormat:@"This page #%d is%@ configured at %@ \nfor page number %d.",
+                                 page.uniqueNum,
+                                 (isCreated == NO)? @" reusable-sourced \nand" : @"",
+                                 [NSDate date],
+                                 pageNumber];
+    page.centerLabel.text =  configuringText;
     return page;
 }
 
-- (NSInteger)book:(LEXBook *)book shouldLeafToPageWithNumberWhenRotateToOrientation:(UIInterfaceOrientation)orientation fromPageWithNumber:(NSInteger)pageNumber {
+- (NSInteger)book:(LEXBook *)book shouldLeafToPageWithNumberWhenRotateToOrientation:(UIInterfaceOrientation)orientation fromPageWithNumber:(NSInteger)pageNumber
+{
     UIInterfaceOrientation actualOrientation = book.pageViewController.interfaceOrientation;
     NSInteger firstShowingItemIndex = pageNumber * [self itemsPerPageForOrientation:actualOrientation];
     NSInteger newPageNumber = firstShowingItemIndex / [self itemsPerPageForOrientation:orientation];
     return newPageNumber;
 }
 
-- (BOOL)book:(LEXBook *)book shouldAutomaticallyFindNeededPageWhenRotateTo:(UIInterfaceOrientation)orientation fromPageWithNumber:(NSInteger)pageNumber {
+- (BOOL)book:(LEXBook *)book shouldAutomaticallyFindNeededPageWhenRotateTo:(UIInterfaceOrientation)orientation fromPageWithNumber:(NSInteger)pageNumber
+{
     UIInterfaceOrientation actualOrientation = book.pageViewController.interfaceOrientation;
     BOOL actualOrientationIsLandcsape = UIInterfaceOrientationIsLandscape(actualOrientation);
     BOOL futureOrientationIsLandscape = UIInterfaceOrientationIsLandscape(orientation);

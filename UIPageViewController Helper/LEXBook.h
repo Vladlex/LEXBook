@@ -39,10 +39,11 @@ typedef enum NSInteger {
 @property (nonatomic, assign) id <LEXBookDataSource> dataSource;
 @property (nonatomic, assign) id <LEXBookDelegate> delegate;
 
-@property (nonatomic, assign) BOOL useReusablePages;
+@property (nonatomic, readonly) BOOL useReusablePages;
 
 @property (nonatomic, assign, getter = isShowBackOfLastPageIfPageIsDoubleSided) BOOL showBackOfLastPageIfPageIsDoubleSided;
 
+- (id)initWithUsingReusablePages:(BOOL)useReusablePages;
 
 // You can pass 'nil' as identifier. In this case identifier will be automatically changed to @Page".
 - (UIViewController <LEXReusablePageProtocol> *)dequeueReusablePage;
